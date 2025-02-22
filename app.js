@@ -338,19 +338,15 @@ extractBtnHTML.addEventListener('click', function () {
 
     outputHTML.value = encodedDeck;
 
-    let textDeck = `${getCardName(commanderData.unit_id)}:`;
-    const cardTexts = Object.values(deckWithoutCommander).map((card) => {
-      const name = getCardName(card.unit_id);
-      const level = card.level;
-      const rune =
-        card.runes && card.runes['1']
-          ? getRuneName(card.runes['1'].item_id)
-          : '';
-      return `${name}|${level}${rune ? '|' + rune : ''}`;
-    });
+    const decodedDeck = hash_decode(encodedDeck);
+    const commanderTextual = unitInfo_to_textual(decodedDeck.commander, true);
+    let cardNamesArr = [];
+    for (card of decodedDeck.deck) {
+      cardNamesArr.push(`${unitInfo_to_textual(card)}`);
+    }
+    const deckTextual = `${commanderTextual}: ${cardNamesArr.join(', ')}`;
 
-    textDeck += ' ' + cardTexts.join(', ');
-    textDeckHTML.textContent = textDeck;
+    textDeckHTML.textContent = deckTextual;
   } catch (error) {
     outputHTML.value = 'Error: ' + error.message;
   }
