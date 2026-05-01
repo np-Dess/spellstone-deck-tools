@@ -1,6 +1,7 @@
 let CARDS = {};
 let RUNES = {};
 let FUSIONS = {};
+let SKILL_DATA = {};
 
 async function loadJSON(file) {
   try {
@@ -17,6 +18,11 @@ async function initializeData() {
   CARDS = await loadJSON('card_data.json');
   RUNES = await loadJSON('rune_data.json');
   FUSIONS = await loadJSON('fusion_data.json');
+  SKILL_DATA = await loadJSON('skill_data.json');
+  window.RUNES = RUNES;
+  window.CARDS = CARDS;
+  window.FUSIONS = FUSIONS;
+  window.SKILL_DATA = SKILL_DATA;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
